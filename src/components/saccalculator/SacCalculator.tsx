@@ -2,6 +2,8 @@ import * as React from 'react'
 import { UUID as uuid } from 'angular2-uuid'
 import { IStop, ISafetyStop, _addStop, _updateStop, _removeStop } from '../../lib/sacCalculatorHelper'
 import { Stop } from './Stop'
+import FlatButton from 'material-ui/FlatButton'
+import './SacCalculator.css'
 
 export interface ICalculatorState {
   stops: Array<IStop>
@@ -11,7 +13,8 @@ export interface ICalculatorState {
 export class SacCalculator extends React.Component<{}, ICalculatorState> {
   state = {
     stops: [
-      {uuid: uuid.UUID(), depthInMeters: 8, timeInSeconds: 22 * 60},
+      {uuid: uuid.UUID(), depthInMeters: 25, timeInSeconds: 32 * 60},
+      {uuid: uuid.UUID(), depthInMeters: 6, timeInSeconds: 3 * 60},
     ],
     safetyStop: {
       uuid: uuid.UUID(),
@@ -34,7 +37,7 @@ export class SacCalculator extends React.Component<{}, ICalculatorState> {
     })
   }
 
-  _handleUpdateStop = (stop: IStop, event: React.MouseEvent<HTMLElement>) : void => {
+  _handleUpdateStop = (stop: IStop) : void => {
     const updatedStops = _updateStop(this.state.stops, stop)
     this.setState({
       stops: updatedStops
@@ -53,16 +56,28 @@ export class SacCalculator extends React.Component<{}, ICalculatorState> {
     const addStopHandler = this._handleAddStop
     return (
       <div>
-        {this.state.stops.map((stop: IStop) => (
-          <Stop
-            key={stop.uuid}
-            {...stop}
-            _handleRemoveStop={this._handleRemoveStop}
-            _handleUpdateStop={this._handleUpdateStop}
-          />
-        )
-        )}
-        <a href="#" onClick={addStopHandler}>Add stop</a>
+        <div className="stops">
+          {this.state.stops.map((stop: IStop) => (
+            <Stop
+              key={stop.uuid}
+              {...stop}
+              previousDepthInMeters={0}
+              _handleRemoveStop={this._handleRemoveStop}
+              _handleUpdateStop={this._handleUpdateStop}
+            />
+          )
+          )}
+          <div className="stop totals">
+            <div className="field">&nbsp;</div>
+            <div className="field">&nbsp;</div>
+            <div className="field label"><strong>Total</strong></div>
+            <div className="field">&nbsp;</div>
+            <div className="field">&nbsp;</div>
+          </div>
+        </div>
+        <div className="footer">
+          <FlatButton href="#" onClick={addStopHandler} label="Add stop" primary={true} />
+        </div>
       </div>
     )
   }

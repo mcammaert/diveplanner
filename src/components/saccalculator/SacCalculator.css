@@ -1,0 +1,19 @@
+.stops {
+  display: flex;
+  flex-direction: column;
+}
+.stop {
+  flex-grow: 1;
+  display: flex;
+  align-items: baseline;
+}
+.field {
+  flex: 1 1;
+  padding: 10px;
+}
+.totals {
+  padding: 20px 0;
+}
+.footer {
+  padding: 10px;
+}

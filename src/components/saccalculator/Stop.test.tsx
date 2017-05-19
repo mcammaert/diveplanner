@@ -8,6 +8,7 @@ it('renders without crashing', () => {
   ReactDOM.render(
     <Stop
       uuid={uuid.UUID()}
+      previousDepthInMeters={0}
       depthInMeters={0}
       timeInSeconds={0}
       _handleUpdateStop={() => false}
