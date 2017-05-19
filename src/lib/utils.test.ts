@@ -1,4 +1,4 @@
-import {barToMeter, meterToBar} from './utils'
+import { barToMeter, meterToBar, partial, pipe } from './utils'
 
 test('Should convert 1 bar to meter', () => {
   const result = barToMeter(1) // expect 0
@@ -35,7 +35,42 @@ test('Should convert 28 meter to bar', () => {
   expect(result).toBe(3.8)
 })
 
-test('Should convert 28 meter to bar to meter', () => {
+test('Should convert 28 meter to bar and back again to meter', () => {
   const result = barToMeter(meterToBar(28)) // expect 28
   expect(result).toBe(28)
+})
+
+const add = (a: number, b: number) => a + b
+const addThree = (a: number, b: number, c: number) => a + b + c
+const inc = (num: number) => num + 1
+const dbl = (num: number) => num * 2
+
+test('partial applies the first argument ahead of time', () => {
+  const inced = partial(add, 1)
+  const result = inced(2) // expect 3
+  expect(result).toBe(3)
+})
+
+test('partial applies the multiple arguments ahead of time', () => {
+  const inced = partial(addThree, 1, 3)
+  const result = inced(2) // expect 6
+  expect(result).toBe(6)
+})
+
+test('pipe passes the results of inc to dbl', () => {
+  const pipeline = pipe(inc, dbl) // => dbl(inc(2)) OR g(f(...args))
+  const result = pipeline(2)
+  expect(result).toBe(6)
+})
+
+test('pipe passes the results of dbl to inc', () => {
+  const pipeline = pipe(dbl, inc) // => inc(dbl(2))
+  const result = pipeline(2)
+  expect(result).toBe(5)
+})
+
+test('pipe works with more than 2 functions', () => {
+  const pipeline = pipe(add, inc, dbl, inc) // => inc(dbl(inc(add(1,2))))
+  const result = pipeline(1, 2)
+  expect(result).toBe(9)
 })
