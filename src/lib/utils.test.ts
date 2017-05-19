@@ -1,4 +1,4 @@
-import { barToMeter, meterToBar, partial, pipe } from './utils'
+import { barToMeter, meterToBar, partial, pipe, isNumeric } from './utils'
 
 test('Should convert 1 bar to meter', () => {
   const result = barToMeter(1) // expect 0
@@ -38,6 +38,41 @@ test('Should convert 28 meter to bar', () => {
 test('Should convert 28 meter to bar and back again to meter', () => {
   const result = barToMeter(meterToBar(28)) // expect 28
   expect(result).toBe(28)
+})
+
+test('Should mark 2 as a valid number', () => {
+  const result = isNumeric(2) // expect true
+  expect(result).toBe(true)
+})
+
+test('Should mark 2.02 as a valid number', () => {
+  const result = isNumeric(2.02) // expect true
+  expect(result).toBe(true)
+})
+
+test('Should mark "2" as a valid number', () => {
+  const result = isNumeric('2') // expect true
+  expect(result).toBe(true)
+})
+
+test('Should mark "2.002" as a valid number', () => {
+  const result = isNumeric('2.002') // expect true
+  expect(result).toBe(true)
+})
+
+test('Should mark "A" as an invalid number', () => {
+  const result = isNumeric('A') // expect false
+  expect(result).toBe(false)
+})
+
+test('Should mark "2A" as an invalid number', () => {
+  const result = isNumeric('2A') // expect false
+  expect(result).toBe(false)
+})
+
+test('Should mark "A2" as an invalid number', () => {
+  const result = isNumeric('A2') // expect false
+  expect(result).toBe(false)
 })
 
 const add = (a: number, b: number) => a + b
