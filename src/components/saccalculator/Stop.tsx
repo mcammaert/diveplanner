@@ -41,7 +41,7 @@ export class Stop extends React.Component<IStopClass, null> {
           _handleUpdateField={updateFieldHandler}
         />
         Bar: {pressure.toFixed(2)}<br />
-        SAC: {consumption.toFixed(2)} l.<br />
+        SAC: {consumption.toFixed(2)}<br />
         <a className="btn btn-delete" href="" onClick={removeHandler}>delete</a>
       </div>
     )
