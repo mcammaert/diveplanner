@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './App.css'
-import {SacCalculator} from './components/saccalculator'
+import { SacCalculator } from './components/saccalculator'
 
 const logo = require('./logo.svg')
 
