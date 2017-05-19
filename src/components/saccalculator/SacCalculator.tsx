@@ -34,7 +34,7 @@ export class SacCalculator extends React.Component<{}, ICalculatorState> {
     })
   }
 
-  _handleUpdateStop = (stop: IStop) : void => {
+  _handleUpdateStop = (stop: IStop, event: React.MouseEvent<HTMLElement>) : void => {
     const updatedStops = _updateStop(this.state.stops, stop)
     this.setState({
       stops: updatedStops
